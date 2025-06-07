@@ -1,4 +1,3 @@
-import * as React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import theme from "../src/theme";
@@ -17,7 +16,8 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
-          {(this.props as any).emotionStyleTags}
+          {/* @ts-expect-error  generated code */}
+          {this.props.emotionStyleTags}
         </Head>
         <body>
           <Main />
@@ -62,6 +62,8 @@ MyDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
+      // generated code
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       enhanceApp: (App: any) =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />;
@@ -76,7 +78,6 @@ MyDocument.getInitialProps = async (ctx) => {
     <style
       data-emotion={`${style.key} ${style.ids.join(" ")}`}
       key={style.key}
-      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{ __html: style.css }}
     />
   ));

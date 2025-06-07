@@ -1,4 +1,4 @@
-import { grey, indigo, red } from "@mui/material/colors";
+import { indigo, red } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
 // Create a theme instance.

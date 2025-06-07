@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import { Formik, FieldArray, Form } from "formik";
 import { Button } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -27,7 +27,7 @@ const ButtonsArea = styled("div")`
   }
 `;
 
-const EditForm = (): JSX.Element => {
+const EditForm: FC = () => {
   const [initialValues, setInitialValues] = useState<{ triggers: Trigger[] }>({
     triggers: [
       {
@@ -58,10 +58,9 @@ const EditForm = (): JSX.Element => {
     document.body.appendChild(inputElement);
     inputElement.type = "file";
     inputElement.accept = "application/json";
-    // @ts-ignore めんどい
     inputElement.style = "display: none;";
     inputElement.onchange = (e) => {
-      // @ts-ignore めんどい
+      // @ts-expect-error めんどい
       const file = e.target?.files[0] as File | undefined;
       if (file) {
         fr.readAsText(file);

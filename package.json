@@ -5,33 +5,38 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "tsc": "tsc",
+    "lint": "eslint"
   },
   "dependencies": {
-    "@emotion/babel-plugin": "^11.7.2",
-    "@emotion/cache": "^11.7.1",
-    "@emotion/react": "^11.7.1",
-    "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.6.0",
-    "@mui/icons-material": "^5.2.5",
-    "@mui/material": "^5.2.6",
-    "formik": "^2.2.9",
-    "next": "12.0.3",
-    "react": "17.0.2",
-    "react-color": "^2.19.3",
-    "react-dom": "17.0.2"
+    "@emotion/babel-plugin": "11.13.5",
+    "@emotion/cache": "11.14.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/server": "11.11.0",
+    "@emotion/styled": "11.14.0",
+    "@mui/icons-material": "5.2.5",
+    "@mui/material": "5.2.6",
+    "@mui/system": "5.17.1",
+    "formik": "2.4.6",
+    "next": "15.2.3",
+    "react": "19.0.0",
+    "react-color": "2.19.3",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^12.0.3",
-    "@types/gtag.js": "^0.0.8",
-    "@types/node": "16.11.7",
-    "@types/react": "17.0.34",
-    "@types/react-color": "^3.0.6",
-    "eslint": "7",
-    "eslint-config-next": "12.0.3",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.4.1",
-    "typescript": "4.4.4"
-  }
+    "@eslint/js": "9.22.0",
+    "@next/eslint-plugin-next": "15.2.3",
+    "@types/gtag.js": "0.0.20",
+    "@types/node": "22.13.10",
+    "@types/react": "19.0.12",
+    "@types/react-color": "3.0.13",
+    "eslint": "9.22.0",
+    "eslint-config-prettier": "10.1.1",
+    "eslint-plugin-prettier": "5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "prettier": "3.5.3",
+    "typescript": "5.8.2",
+    "typescript-eslint": "8.27.0"
+  },
+  "packageManager": "pnpm@10.6.4+sha512.da3d715bfd22a9a105e6e8088cfc7826699332ded60c423b14ec613a185f1602206702ff0fe4c438cb15c979081ce4cb02568e364b15174503a63c7a8e2a5f6c"
 }

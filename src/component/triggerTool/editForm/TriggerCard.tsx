@@ -24,7 +24,6 @@ import type {
 } from "../../../types/Trigger";
 import { styled } from "@mui/system";
 import State from "./State";
-import { grey } from "@mui/material/colors";
 import { sendTrackingEvent } from "../../../utils/analytics";
 
 const NameAndCategory = styled("div")`
