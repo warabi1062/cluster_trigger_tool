@@ -16,7 +16,7 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { TriggerState } from "../../../types/Trigger";
-import { styled } from "@mui/system";
+import { styled } from "@mui/material/styles";
 
 const Label = styled(Typography)<{
   required?: boolean;
@@ -24,8 +24,8 @@ const Label = styled(Typography)<{
   font-weight: bold;
   margin-bottom: 4px;
   ::after {
-    content: ${(props) => (props.required ? "'*'" : "")};
-    color: ${(props) => props.theme.palette.secondary.main};
+    content: ${({ required }) => (required ? "'*'" : "")};
+    color: ${({ theme }) => theme.palette.secondary.main};
   }
 `;
 

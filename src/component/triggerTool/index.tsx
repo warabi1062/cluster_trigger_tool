@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import { styled } from "@mui/system";
+import { styled } from "@mui/material/styles";
 import EditForm from "./editForm";
 import Footer from "./Footer";
 import Header from "./Header";

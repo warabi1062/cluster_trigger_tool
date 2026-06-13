@@ -1,14 +1,14 @@
 import { FC, useState } from "react";
 import { Formik, FieldArray, Form } from "formik";
 import { Button } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 
 import {
   triggersToTriggerJsonText,
   triggerJsonTextToTriggers,
 } from "../../../encoder/json";
 import { download } from "../../../utils/download";
-import { styled } from "@mui/system";
+import { styled } from "@mui/material/styles";
 import { JsonFormat, Trigger } from "../../../types/Trigger";
 import TriggerCard from "./TriggerCard";
 
@@ -123,7 +123,7 @@ const EditForm: FC = () => {
                     ))}
                   </CardWrapper>
                   <Button
-                    startIcon={<AddCircleOutlineIcon />}
+                    startIcon={<AddCircleOutlinedIcon />}
                     onClick={() => {
                       const emptyTrigger: Trigger = {
                         displayName: "",

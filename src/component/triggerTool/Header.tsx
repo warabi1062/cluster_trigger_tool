@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Typography, AppBar, Toolbar } from "@mui/material";
-import { styled } from "@mui/system";
+import { styled } from "@mui/material/styles";
 
 const Title = styled(Typography)`
   flex-grow: 1;

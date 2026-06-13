@@ -14,7 +14,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AddCircleOutlineIcond from "@mui/icons-material/AddCircleOutlined";
 import { Field, FieldProps, FieldArray } from "formik";
 import { TwitterPicker } from "react-color";
 import type {
@@ -22,7 +22,7 @@ import type {
   Trigger,
   TriggerColor,
 } from "../../../types/Trigger";
-import { styled } from "@mui/system";
+import { styled } from "@mui/material/styles";
 import State from "./State";
 
 const NameAndCategory = styled("div")`
@@ -42,7 +42,9 @@ const StyledColorPicker = styled(TwitterPicker)`
   width: 280px !important;
 `;
 
-const StyledCard = styled(Card)<{ triggerColor: TriggerColor }>`
+const StyledCard = styled(Card, {
+  shouldForwardProp: (prop) => prop !== "triggerColor",
+})<{ triggerColor: TriggerColor }>`
   position: relative;
   background: linear-gradient(
     270deg,
@@ -62,8 +64,8 @@ const Label = styled(Typography)<{
   font-weight: bold;
   margin-bottom: 4px;
   ::after {
-    content: ${(props) => (props.required ? "'*'" : "")};
-    color: ${(props) => props.theme.palette.secondary.main};
+    content: ${({ required }) => (required ? "'*'" : "")};
+    color: ${({ theme }) => theme.palette.secondary.main};
   }
 `;
 
@@ -215,7 +217,7 @@ const TriggerCard: React.FunctionComponent<Props> = ({
                     />
                   ))}
                   <Button
-                    startIcon={<AddCircleOutlineIcon />}
+                    startIcon={<AddCircleOutlineIcond />}
                     onClick={() => {
                       const emptyState: TriggerState = {
                         key: "",
