@@ -13,7 +13,7 @@ const Footer: React.FunctionComponent = () => {
   return (
     <Container>
       <IconButton
-        href="https://github.com/MiuraKo-hei/cluster_trigger_tool"
+        href="https://github.com/warabi1062/cluster_trigger_tool"
         target="_blank"
         rel="noopener noreferrer"
       >

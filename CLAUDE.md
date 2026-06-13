@@ -4,21 +4,30 @@
 
 ## プロジェクト概要
 
-メタバースプラットフォーム [cluster](https://cluster.mu/) の「トリガー」機能用 JSON ファイルを GUI で生成・編集する Web ツール。すべての処理はブラウザ内で完結するクライアントサイド SPA で、サーバーは静的配信のみを担う。本番は Vercel（https://cluster-trigger.tool.waramochi.com/）。
+メタバースプラットフォーム [cluster](https://cluster.mu/) の「トリガー」機能用 JSON ファイルを GUI で生成・編集する Web ツール。すべての処理はブラウザ内で完結するクライアントサイド SPA。`output: "export"` で静的サイトとして書き出し、**GitHub Pages**（https://warabi1062.github.io/cluster_trigger_tool/）で公開する。
 
 ## コマンド
 
 ```bash
 pnpm install   # 依存関係のインストール
 pnpm dev       # 開発サーバー（http://localhost:3000）
-pnpm build     # 本番ビルド
-pnpm start     # 本番サーバー
+pnpm build     # 静的書き出し（out/ に生成）
 pnpm tsc       # 型チェック（tsc --noEmit 相当）
 pnpm lint      # ESLint
 ```
 
 - パッケージマネージャーは **pnpm 固定**（`packageManager: pnpm@10.6.4`）。npm / yarn は使わない。
 - テストフレームワークは未導入。
+- `next start`（Node サーバー）は使わない。静的書き出し前提のため。
+
+## デプロイ（GitHub Pages）
+
+`main` への push で `.github/workflows/deploy.yml` が走り、`GITHUB_PAGES=true pnpm build` → `out/` を Pages に公開する。
+
+**非自明な挙動 — basePath の出し分け**:
+- GitHub Pages はプロジェクトページ（`/cluster_trigger_tool` 配下）配信なので `basePath` / `assetPrefix` が必要。
+- `next.config.mjs` は環境変数 `GITHUB_PAGES=true` のときだけ basePath を付与し、ローカル開発・デフォルトビルドではルート配信にする。
+- `next/link` / `next/image` は basePath を自動付与するが、**手書きの絶対パス（favicon 等）には付かない**。そのため `next.config.mjs` で basePath を `NEXT_PUBLIC_BASE_PATH` として公開し、`_document.tsx` の favicon パスに自前で前置している。新たに手書きの絶対パスを足すときは同じく前置すること。
 
 ## アーキテクチャ
 
@@ -50,10 +59,7 @@ TriggerTool (index.tsx)
 
 - トリガー/状態の追加・削除・移動・複製はすべて Formik の `FieldArray` ヘルパー（`push` / `remove` / `swap` / `insert`）で行う。
 - インポートは `EditForm` 内で動的に `<input type="file">` を生成 → `FileReader` で読み込み → `setInitialValues`（`enableReinitialize` で反映）。エクスポートは `src/utils/download.ts` の `download` 関数で Blob をダウンロード。
-
-### 分析トラッキング
-
-`src/utils/analytics/index.ts` の `sendTrackingEvent(label)` が `window.gtag` を呼ぶ。トリガー/状態の追加・削除・移動・複製、インポート/エクスポートなど主要操作で呼び出している。新しいユーザー操作を追加したら、既存の慣習に合わせてトラッキングを入れることを検討する。
+- スタイリングの `styled` は **`@mui/material/styles` から import** する（`@mui/system` の `styled` は ThemeProvider の palette 付きテーマを解決できず実行時エラーになる）。テンプレート内でテーマを使うときは `${({ theme }) => ...}` 形式で受け取る。
 
 ## 拡張時のチェックポイント
 
@@ -66,4 +72,4 @@ TriggerTool (index.tsx)
 
 `cline_docs/memory-bank/` に背景・設計・進捗の詳細メモがある（productContext / systemPatterns / techContext など）。プロジェクトの「なぜ」を知りたいときの参照先。
 
-⚠️ ただし `techContext.md` のバージョン記述（Next.js v12、React v17 等）は古く、実際は `package.json` のとおり Next.js 15 / React 19。バージョンは常に `package.json` を正とすること。
+⚠️ ただし `techContext.md` のバージョン記述や「Vercel にデプロイ」等は古く、実態とずれている（実際は Next.js 16 / React 19、デプロイ先は GitHub Pages）。バージョン・構成は常に `package.json` と本ファイルを正とすること。

@@ -4,7 +4,7 @@
 
 JSON を手書きすることなく、フォーム上でトリガーや状態（state）を設定し、有効な JSON としてエクスポートできます。既存の JSON を読み込んで編集することも可能です。
 
-🔗 **公開 URL**: https://cluster-trigger.tool.waramochi.com/
+🔗 **公開 URL**: https://warabi1062.github.io/cluster_trigger_tool/
 
 ## 主な機能
 
@@ -41,15 +41,19 @@ pnpm install
 pnpm dev
 ```
 
-### ビルドと本番起動
+### ビルド（静的書き出し）
+
+このアプリは `output: "export"` による静的サイトとしてビルドされ、`out/` ディレクトリに HTML/CSS/JS が出力されます。
 
 ```bash
-# 本番用ビルド
+# 静的書き出し（out/ に生成）
 pnpm build
 
-# 本番サーバーの起動
-pnpm start
+# GitHub Pages と同じパス構成（/cluster_trigger_tool 配下）でビルドする場合
+GITHUB_PAGES=true pnpm build
 ```
+
+`GITHUB_PAGES=true` のときのみ `basePath` / `assetPrefix` に `/cluster_trigger_tool` が付与されます。ローカル開発（`pnpm dev`）やデフォルトの `pnpm build` ではルート配信になります。
 
 ### その他のコマンド
 
@@ -112,10 +116,15 @@ pnpm lint   # ESLint によるチェック
 │   │   └── index.tsx
 │   ├── encoder/json.ts         # Trigger ⇔ JSON の変換ロジック
 │   ├── types/Trigger.ts        # 型定義
-│   └── utils/                  # ダウンロード・分析トラッキング
+│   └── utils/download.ts       # ファイルダウンロード
+├── .github/workflows/          # GitHub Actions（Pages デプロイ）
 └── cline_docs/memory-bank/     # プロジェクトのメモリバンク（背景・設計メモ）
 ```
 
 ## デプロイ
 
-Vercel にデプロイされています。
+`main` ブランチへの push をトリガーに、GitHub Actions（`.github/workflows/deploy.yml`）で静的書き出し（`GITHUB_PAGES=true pnpm build`）を行い、生成された `out/` を **GitHub Pages** に公開します。
+
+### 初回セットアップ
+
+リポジトリの **Settings → Pages → Build and deployment → Source** を **「GitHub Actions」** に設定してください。以降は `main` への push で自動デプロイされます。
