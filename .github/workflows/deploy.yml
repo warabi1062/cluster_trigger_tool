@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+# JavaScript アクションを Node.js 24 ランタイムで実行する（Node.js 20 は廃止予定のため）
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 # GITHUB_TOKEN に Pages へのデプロイ権限を付与する
 permissions:
   contents: read
@@ -30,7 +34,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: pnpm
 
       - name: Install dependencies
