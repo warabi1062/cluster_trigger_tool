@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  # main への直接 push でも検証する（PR を経由しない変更の保険）
+  push:
+    branches:
+      - main
+
+# JavaScript アクションを Node.js 24 ランタイムで実行する（Node.js 20 は廃止予定のため）
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+# 同一ブランチ/PR で新しい push があれば進行中の実行をキャンセルする
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm tsc
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build (static export)
+        env:
+          GITHUB_PAGES: "true"
+        run: pnpm build
