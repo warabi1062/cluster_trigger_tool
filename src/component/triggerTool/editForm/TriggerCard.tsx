@@ -24,7 +24,6 @@ import type {
 } from "../../../types/Trigger";
 import { styled } from "@mui/system";
 import State from "./State";
-import { sendTrackingEvent } from "../../../utils/analytics";
 
 const NameAndCategory = styled("div")`
   display: flex;
@@ -198,17 +197,14 @@ const TriggerCard: React.FunctionComponent<Props> = ({
                       state={state}
                       remove={() => {
                         arrayHelpers.remove(stateIndex);
-                        sendTrackingEvent("remove state");
                       }}
                       isFirst={stateIndex === 0}
                       isLast={stateIndex === trigger.state.length - 1}
                       moveUp={() => {
                         arrayHelpers.swap(stateIndex, stateIndex - 1);
-                        sendTrackingEvent("move up state");
                       }}
                       moveDown={() => {
                         arrayHelpers.swap(stateIndex, stateIndex + 1);
-                        sendTrackingEvent("move down state");
                       }}
                       duplication={() => {
                         arrayHelpers.insert(stateIndex + 1, {
@@ -227,7 +223,6 @@ const TriggerCard: React.FunctionComponent<Props> = ({
                         value: 0,
                       };
                       arrayHelpers.push(emptyState);
-                      sendTrackingEvent("add state");
                     }}
                   >
                     Add
